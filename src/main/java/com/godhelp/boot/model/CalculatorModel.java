@@ -1,16 +1,30 @@
 package com.godhelp.boot.model;
 
 public class CalculatorModel {
-    public double operand1;
-    public double operand2;
-    public String operator;
-    public double result;
+    private double result;
+    private String errorMessage;
 
-    public CalculatorModel(double operand1, double operand2, String operator, double result) {
-        this.operand1 = operand1;
-        this.operand2 = operand2;
-        this.operator = operator;
+    public CalculatorModel(double result) {
         this.result = result;
     }
 
+    public CalculatorModel(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public double getResult() {
+        return result;
+    }
+
+    public void setResult(double result) {
+        this.result = result;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 }

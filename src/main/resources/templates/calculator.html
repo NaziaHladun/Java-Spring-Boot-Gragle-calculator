@@ -1,26 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Калькулятор</title>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
     <style>
         body{
             text-align: center;
+            background-color: gainsboro;
+        }
+        input{
+            margin: 7px;
+        }
+        .btn{
+            width: 150px;
+            height: 30px;
+            margin-top: 20px;
+            border-radius: 5%;
+            border-style: none;
+            background-color: rgb(141, 141, 141);
+        }
+        .btn:hover{
+            background-color: rgb(71, 79, 79);
+            transition: ease 0.3s;
+            color: aliceblue;
+        }
+        h1{
+            font-size: 3rem;
         }
     </style>
 </head>
 <body>
-    <h1>Калькулятор</h1>
-    <form action="/calculate" method="post">
-        <input type="number" name="operand1" required>
-        <select name="operator">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-        </select>
-        <input type="number" name="operand2" required>
-        <input type="submit" value="Обчислити">
-    </form>
-    <p>Результат: <span th:text="${result}"></span></p>
+
+<h1>Calculator</h1>
+
+<form action="/calculate" method="post">
+    Number 1: <input type="number" name="num1" required><br>
+    Number 2: <input type="number" name="num2" required><br>
+    Operation:
+    <select name="operation">
+        <option value="add">Addition</option>
+        <option value="subtract">Subtraction</option>
+        <option value="multiply">Multiplication</option>
+        <option value="divide">Division</option>
+    </select><br>
+    <input type="submit" value="Calculate" class="btn">
+</form>
+
+<h3 th:if="${CalculatorModel != null}">Result: <span th:text="${CalculatorModel.result}"></span></h3>
+<p th:if="${CalculatorModel != null}" th:text="${CalculatorModel.errorMessage}" style="color:red;"></p>
+
 </body>
 </html>
