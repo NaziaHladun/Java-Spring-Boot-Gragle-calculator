@@ -1,47 +1,47 @@
 package com.godhelp.boot.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import com.godhelp.boot.model.CalculatorModel;
 
 @Controller
 public class CalculatorController {
 
     @GetMapping("/")
-    public String showCalculatorPage() {
+    public String index() {
         return "calculator";
     }
 
     @PostMapping("/calculate")
-    public ResponseEntity<Double> calculate(
-        @RequestParam double operand1,
-        @RequestParam double operand2,
-        @RequestParam String operator
-    ) {
-        double result;
-        switch (operator) {
+    public String calculate(@RequestParam double num1, @RequestParam double num2, @RequestParam String operation, Model model) {
+        CalculatorModel CalculatorModel;
+
+        switch (operation) {
             case "add":
-                result = operand1 + operand2;
+                CalculatorModel = new CalculatorModel(num1 + num2);
                 break;
             case "subtract":
-                result = operand1 - operand2;
+                CalculatorModel = new CalculatorModel(num1 - num2);
                 break;
             case "multiply":
-                result = operand1 * operand2;
+                CalculatorModel = new CalculatorModel(num1 * num2);
                 break;
             case "divide":
-                if (operand2 != 0) {
-                    result = operand1 / operand2;
+                if(num2 != 0) {
+                    CalculatorModel = new CalculatorModel(num1 / num2);
                 } else {
-                    throw new IllegalArgumentException("Ділення на нуль неможливе.");
+                    CalculatorModel = new CalculatorModel("Division by zero is not allowed!");
                 }
                 break;
             default:
-                throw new IllegalArgumentException("Недійсна операція.");
+                CalculatorModel = new CalculatorModel(0);
+                break;
         }
-        return ResponseEntity.ok(result);
+
+        model.addAttribute("CalculatorModel", CalculatorModel);
+        return "calculator";
     }
 }
-
